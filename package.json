@@ -1,16 +1,32 @@
 {
-  "name": "faceapi-js-boilerplate",
-  "version": "1.0.0",
-  "description": "Boilerplate code for training",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "pilczuk",
-  "license": "MIT",
+  "name": "crappyflap",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "express": "^4.17.1",
-    "face-api.js": "^0.20.1",
-    "opn": "^6.0.0",
-    "request": "^2.88.0"
+    "handtrackjs": "^0.0.13",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
