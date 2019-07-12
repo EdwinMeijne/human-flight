@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import * as handTrack from 'handtrackjs';
-
+import Flapperz from "./FlappyBird";
 const videoWidth = 720;
 const videoHeight = 480;
 
@@ -31,12 +31,12 @@ async function setupCamera(video) {
   });
 }
 
-class App extends React.Component {
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.video = React.createRef();
     this.canvas = React.createRef();
-    this.state = { handTrackModel: null, video: null }
+    this.state = { handTrackModel: null, video: null, clapped: false }
   }
 
   clapDetection = (rect1, rect2) => {
@@ -44,8 +44,17 @@ class App extends React.Component {
       rect1[0] + rect1[2] > rect2[0] &&
       rect1[1] < rect2[1] + rect2[3] &&
       rect1[3] + rect1[1] > rect2[1]) {
-      console.log('clap!')
-      this.setState({})
+      this.setState((state) => {
+        if (state.clapped) return
+        console.log('tick')
+        window.dispatchEvent(new CustomEvent('clappityclap', { bubbles: true }))
+        return { clapped: true }
+      })
+    } else {
+      this.setState((state) => {
+        if (!state.clapped) return
+        return { clapped: false }
+      })
     }
   }
 
@@ -69,7 +78,7 @@ class App extends React.Component {
       flipHorizontal: true,   // flip e.g for video
       maxNumBoxes: 2,        // maximum number of boxes to detect
       iouThreshold: 0.5,      // ioU threshold for non-max suppression
-      scoreThreshold: 0.9,    // confidence threshold for predictions.
+      scoreThreshold: 0.7,    // confidence threshold for predictions.
     })
     this.setState({ handTrackModel: model, video: v }, () => {
       this.runDetection()
@@ -77,15 +86,12 @@ class App extends React.Component {
 
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-
-  }
   render() {
     return (
       <div className="App">
         <video className="canvasbox" ref={this.video} playsInline></video>
-        <canvas className="canvasbox" ref={this.canvas}></canvas>
-
+        <canvas className="canvasbox" style={{display: 'none'}} ref={this.canvas}></canvas>
+        <Flapperz />
       </div>
     );
   }

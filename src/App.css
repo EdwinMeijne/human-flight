@@ -37,7 +37,7 @@ body {
 }
 
 .canvasbox {
-  position: absolute;
+  /* position: absolute; */
   left: 0;
   top: 0;
 }
